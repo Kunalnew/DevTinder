@@ -15,6 +15,7 @@ app.post('/main/post',(req,res)=>{
 });
 
 app.use('/',(err,req,res,next)=>{
+    if(err)
     res.status(500).send("error encountered")
 })
 
