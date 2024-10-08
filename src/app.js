@@ -1,20 +1,22 @@
 const express=require('express');
 const app=express();
+const {auth}=require('./middleware/auth.js');
 
-app.use('/main',(req,res,next)=>{
-    console.log("first");
-    // res.send("hello kaki");
-    next();
-},(req,res,next)=>{
-     console.log("second");
-    //  res.send("second");
-     next();
-},(req,res)=>{
-    console.log("third");
-    res.send("third");
+app.use('/main',auth);
+
+app.get('/main/get',(req,res)=>{
+    console.log("main/get");
+    res.send("/main/get done");
 });
 
+app.post('/main/post',(req,res)=>{
+    console.log("main/post");
+    res.send("/main/post done");
+});
 
+app.use('/',(err,req,res,next)=>{
+    res.status(500).send("error encountered")
+})
 
 app.listen(3000,()=>{
     console.log("server starting at port 3000....")
